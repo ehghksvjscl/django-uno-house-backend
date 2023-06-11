@@ -2,7 +2,7 @@ from django.db import models
 
 
 class House(models.Model):
-    owner = models.ForeignKey("users.User", on_delete=models.CASCADE)
+    owner = models.ForeignKey("users.User", null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=140)
     price = models.PositiveBigIntegerField(help_text="KRW")
     description = models.TextField()
