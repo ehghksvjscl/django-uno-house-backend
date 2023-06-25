@@ -22,6 +22,13 @@ class Room(CommonModel):
     kind = models.CharField(max_length=50, choices=RoomKindChoices.choices)
     host = models.ForeignKey("users.User", null=True, on_delete=models.SET_NULL)
     amenities = models.ManyToManyField("rooms.Amenity", related_name="rooms")
+    category = models.ForeignKey(
+        "categories.Category",
+        related_name="rooms",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
 
     def __str__(self) -> str:
         return self.name
