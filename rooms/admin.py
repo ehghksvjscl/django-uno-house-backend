@@ -4,7 +4,17 @@ from . import models
 
 @admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "country", "city", "host", "created", "updated")
+    list_display = (
+        "id",
+        "name",
+        "country",
+        "city",
+        "host",
+        "total_amenities",
+        "rating",
+        "created",
+        "updated",
+    )
 
 
 @admin.register(models.Amenity)
