@@ -54,6 +54,7 @@ BASE_APP = [
 
 INSTALL_APPS = [
     "debug_toolbar",
+    "rest_framework",
 ]
 
 INTERNAL_IPS = "127.0.0.1"

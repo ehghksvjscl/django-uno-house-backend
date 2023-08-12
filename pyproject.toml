@@ -11,6 +11,7 @@ python = "^3.10"
 Django = "^4.2.2"
 Pillow = "^9.5.0"
 django-debug-toolbar = "^4.1.0"
+djangorestframework = "^3.14.0"
 
 
 [build-system]
