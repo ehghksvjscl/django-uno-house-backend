@@ -30,6 +30,22 @@ class Room(CommonModel):
         blank=True,
     )
 
+    def total_amenities(room):
+        return room.amenities.count()
+
+    def rating(room):
+        reviews = room.reviews.all().values_list("rating", flat=True)
+        count = 0
+        total = 0
+        for review in reviews:
+            total += review
+            count += 1
+
+        if count == 0:
+            return "리뷰 없음"
+
+        return round(total / count, 2)
+
     def __str__(self) -> str:
         return self.name
 
