@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.status import HTTP_400_BAD_REQUEST
+from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_204_NO_CONTENT
+from rest_framework.exceptions import NotFound
 
 from .serializers import AmenitySerializer
 from .models import Amenity
@@ -26,11 +27,26 @@ class AmenityApiView(APIView):
 
 
 class AmenityDetailApiView(APIView):
-    def get(self, request):
-        pass
+    def get_object(self, pk):
+        try:
+            return Amenity.objects.get(pk=pk)
+        except Amenity.DoesNotExist:
+            raise NotFound
 
-    def put(self, request):
-        pass
+    def get(self, _, pk):
+        qs = self.get_object(pk=pk)
+        return Response(AmenitySerializer(qs).data)
 
-    def delete(self, request):
-        pass
+    def put(self, request, pk):
+        qs = self.get_object(pk=pk)
+        serializer = AmenitySerializer(qs, data=request.data, partial=True)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+        serializer = serializer.save()
+        return Response(AmenitySerializer(serializer).data)
+
+    def delete(self, _, pk):
+        qs = self.get_object(pk=pk)
+        qs.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
