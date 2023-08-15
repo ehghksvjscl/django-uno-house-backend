@@ -1,6 +1,10 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_204_NO_CONTENT
+from rest_framework.status import (
+    HTTP_400_BAD_REQUEST,
+    HTTP_204_NO_CONTENT,
+    HTTP_201_CREATED,
+)
 from rest_framework.exceptions import NotFound
 
 from .serializers import AmenitySerializer
@@ -23,7 +27,7 @@ class AmenityApiView(APIView):
             return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
         serializer = serializer.save()
-        return Response(AmenitySerializer(serializer).data)
+        return Response(AmenitySerializer(serializer).data, status=HTTP_201_CREATED)
 
 
 class AmenityDetailApiView(APIView):
