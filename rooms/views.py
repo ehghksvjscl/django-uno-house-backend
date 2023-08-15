@@ -11,7 +11,7 @@ from .serializers import AmenitySerializer
 from .models import Amenity
 
 
-class AmenityApiView(APIView):
+class AmenityListApiView(APIView):
     def get_object(self):
         return Amenity.objects.all()
 
