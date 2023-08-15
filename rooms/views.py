@@ -7,8 +7,30 @@ from rest_framework.status import (
 )
 from rest_framework.exceptions import NotFound
 
-from .serializers import AmenitySerializer
-from .models import Amenity
+from .serializers import AmenitySerializer, RoomSerializer, RoomDetailSerializer
+from .models import Amenity, Room
+
+
+class RoomListView(APIView):
+    def get_object(self):
+        return Room.objects.all()
+
+    def get(self, request):
+        qs = self.get_object()
+        serializer = RoomSerializer(qs, many=True)
+        return Response(serializer.data)
+
+
+class RoomDetail(APIView):
+    def get_object(self, pk):
+        try:
+            return Room.objects.get(pk=pk)
+        except Room.DoesNotExist:
+            raise NotFound
+
+    def get(self, request, pk):
+        qs = self.get_object(pk=pk)
+        return Response(RoomDetailSerializer(qs).data)
 
 
 class AmenityListApiView(APIView):
