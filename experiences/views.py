@@ -11,7 +11,7 @@ from .serializers import PerkSerializer
 from .models import Perk
 
 
-class PerkApiView(APIView):
+class PerkListApiView(APIView):
     def get_object(self):
         return Perk.objects.all()
 
