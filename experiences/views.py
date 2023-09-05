@@ -11,7 +11,7 @@ from .serializers import PerkSerializer
 from .models import Perk
 
 
-class PerkApiView(APIView):
+class PerkListApiView(APIView):
     def get_object(self):
         return Perk.objects.all()
 
@@ -33,16 +33,16 @@ class PerkApiView(APIView):
 class PerkDetailApiView(APIView):
     def get_object(self, pk):
         try:
-            return Perk.objects.get(pk=pk)
+            return Perk.objects.get(pk)
         except Perk.DoesNotExist:
             raise NotFound
 
     def get(self, _, pk):
-        qs = self.get_object(pk=pk)
+        qs = self.get_object(pk)
         return Response(PerkSerializer(qs).data)
 
     def put(self, request, pk):
-        qs = self.get_object(pk=pk)
+        qs = self.get_object(pk)
         serializer = PerkSerializer(qs, data=request.data, partial=True)
         if not serializer.is_valid():
             return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
@@ -51,6 +51,6 @@ class PerkDetailApiView(APIView):
         return Response(PerkSerializer(serializer).data)
 
     def delete(self, _, pk):
-        qs = self.get_object(pk=pk)
+        qs = self.get_object(pk)
         qs.delete()
         return Response(status=HTTP_204_NO_CONTENT)
