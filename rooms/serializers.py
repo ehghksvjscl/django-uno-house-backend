@@ -27,9 +27,9 @@ class RoomSerializer(ModelSerializer):
 
 
 class RoomDetailSerializer(ModelSerializer):
-    host = CleanUserSerializer()
-    amenities = AmenitySerializer(many=True)
-    category = CategorySerializer()
+    host = CleanUserSerializer(read_only=True)
+    amenities = AmenitySerializer(read_only=True, many=True)
+    category = CategorySerializer(read_only=True)
 
     class Meta:
         model = Room
